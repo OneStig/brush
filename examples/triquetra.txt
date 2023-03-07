@@ -1,0 +1,35 @@
+let triquetra = group {
+    triangle1 {
+        length = 100
+        color = '#000'
+        angle = 240
+    }
+
+    triangle2 {
+        length = 100
+        color = '#000'
+        angle = 0
+
+        evolve {
+            child {
+                length /= 2
+                center.y += 3 / 4 * length
+                angle = 240
+            }
+        }
+    }
+
+    triangle3 {
+        length = 100
+        color = '#000'
+        angle = 120
+
+        evolve {
+            child {
+                length /= 2
+                center.y += 3 / 4 * length
+                angle = 0
+            }
+        }
+    }
+}

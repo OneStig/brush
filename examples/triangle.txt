@@ -1,0 +1,13 @@
+let my_shape = triangle{
+    length = 100
+    
+    evolve{
+        rotate(30)  // rotates the shape by 30 degrees
+        shift(50, 50)  // shifts the shape 50 pixels rights and 50 pixels up
+    }
+}
+
+my_shape{
+    center = (100, 100)
+    generations = 10
+}

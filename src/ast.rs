@@ -19,7 +19,7 @@ impl Node {
         Node {
             node_type: node_type,
             value: value,
-            children: Vec::new(),
+            children: Vec::<Node>::new(),
         }
     }
 }

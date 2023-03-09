@@ -16,7 +16,6 @@ fn open_file(path: &str) -> Result<String, std::io::Error> {
 
 fn main() {
     let mut args = env::args();
-
     if args.len() > 1 {
         let filename: String = args.nth(1).unwrap();
 

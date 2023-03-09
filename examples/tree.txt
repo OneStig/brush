@@ -1,0 +1,18 @@
+let tree = line{
+    length = 100
+
+    evolve{
+        child{
+            length = 0.75 * length 
+            rotate(30)
+        }
+        child{
+            length = 0.75 * length 
+            rotate(330)
+        }
+    }
+}
+
+tree(
+    generations = 5
+)

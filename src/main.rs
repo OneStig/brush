@@ -37,7 +37,7 @@ fn main() {
 
                 let interpreter = Interpreter::new(ast);
 
-                interpreter.run();
+                //interpreter.run();
             }
 
             Err(e) => {

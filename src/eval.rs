@@ -23,7 +23,8 @@ impl Interpreter {
         // iterate through the AST until we are done with the shape characteristics
         while let NodeType::ShapeDeclaration = node.node_type {
             // specifics for circle shape
-            if let NodeType::Shape("Circle") = node.children[0].node_type {
+            let circle = String::from("circle");
+            if let NodeType::Shape(circle) = node.children[0].node_type {
                 // changes the radius based on AST value
                 let radius = self.evaluate(&node.children[0].children[0]);
                 shape.set_radius(radius);

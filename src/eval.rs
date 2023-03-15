@@ -59,7 +59,7 @@ impl Interpreter {
                     '+' => left_value + right_value,
                     '-' => left_value - right_value,
                     '/' => left_value / right_value,
-                    '*' => left_value / right_value,
+                    '*' => left_value * right_value,
 
                 }
             }

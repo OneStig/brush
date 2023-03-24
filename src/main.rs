@@ -1,7 +1,5 @@
 mod tokens; mod lexer; mod ast; mod parser; mod eval; mod error; mod art;
 
-<<<<<<< Updated upstream
-=======
 use crate::eval::Interpreter;
 use crate::lexer::Lexer;
 use crate::parser::Parser;
@@ -12,13 +10,9 @@ use crate::art::Rectangle;
 use crate::art::Drawable;
 
 use std::env;
->>>>>>> Stashed changes
 use std::fs::File;
 use std::io::Read;
-use std::env;
-use crate::lexer::Lexer;
-use crate::parser::Parser;
-use crate::eval::Interpreter;
+
 
 fn open_file(path: &str) -> Result<String, std::io::Error> {
     let mut file = File::open(path)?;
@@ -54,9 +48,6 @@ fn main() {
             }
         }
     }
-<<<<<<< Updated upstream
-}
-=======
 }
 
 fn transform_test() {
@@ -70,9 +61,8 @@ fn transform_test() {
     
 
     //draw a rect
-    let mut testrect = Rectangle::new(300.0, 300.0, 200.0, 100.0);
+    let mut testrect = Rectangle::new((300.0, 300.0), 200.0, 100.0);
     shapes.push(testrect.shape);
 
     draw(shapes);
 }
->>>>>>> Stashed changes

@@ -40,6 +40,7 @@ impl Shape {
             angle += 1.0;
         }
 
+<<<<<<< Updated upstream
         let svg = Path::new()
             .set("fill", "none")
             .set("stroke", "black")
@@ -53,6 +54,123 @@ impl Shape {
         //     dimensions: (radius * 2.0, radius * 2.0),
         // }
         unimplemented!();
+=======
+        cdata = cdata.close();
+
+        Circle {
+            shape: Shape {
+                svg: Path::new()
+                    .set("fill", "none")
+                    .set("stroke", "black")
+                    .set("stroke-width", 1)
+                    .set("d", cdata.clone()),
+                path: cdata,
+                center: (x, y),
+                dimensions: (0.0, 0.0),
+                fill: (0, 0, 0),
+                outline_color: (0, 0, 0),
+                outline_width: 1.0,
+                rotation: 0.0,
+                stretch: (1.0, 1.0),
+            },
+            radius: radius,
+        }
+    }
+}
+
+impl Rectangle{
+    pub fn new(pos: (f32, f32), width: f32, height: f32) -> Rectangle {
+        let mut rdata = Data::new();
+
+        rdata = rdata.move_to((x, y));
+        rdata = rdata.line_to((x + width, y));
+        rdata = rdata.line_to((x + width, y - height));
+        rdata = rdata.line_to((x, y - height));
+        rdata = rdata.line_to((x, y));
+
+        rdata = rdata.close();
+
+        Rectangle {
+            shape: Shape {
+                svg: Path::new()
+                    .set("fill", "none")
+                    .set("stroke", "black")
+                    .set("stroke-width", 1)
+                    .set("d", rdata.clone()),
+                path: rdata,
+                dimensions: (0.0, 0.0),
+                fill: (0, 0, 0),
+                outline_color: (0, 0, 0),
+                outline_width: 1.0,
+                stretch: (1.0, 1.0),
+            },
+            width: width,
+            height: height,
+        }
+    }
+}
+
+
+impl Drawable for Shape {
+    fn rotate(&mut self, angle: f32) {
+        self.rotation += angle;
+
+        // iterate through the path and rotate each point
+        let mut cdata = self.path.clone();
+        let mut newData = Data::new();
+
+        // bruh we have to handle each type of command
+        for cmd in cdata.iter() {
+            // derefererence error here
+            match cmd {
+                Command::Move(_pos, para) => {
+                    newData = newData.move_to((para.get(0).unwrap() + angle));
+                }
+
+                Command::Line(_pos, para) => {
+                    newData = newData.line_to((para.get(0).unwrap() + angle));
+                }
+
+                Command::HorizontalLine(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::VerticalLine(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::QuadraticCurve(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::SmoothQuadraticCurve(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::SmoothCubicCurve(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::EllipticalArc(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::CubicCurve(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::Close => {}
+            }
+        }
+
+        self.path = newData.close();
+
+        self.svg = Path::new()
+                    .set("fill", "none")
+                    .set("stroke", "black")
+                    .set("stroke-width", 1)
+                    .set("d", self.path.clone());
+>>>>>>> Stashed changes
     }
 
     pub fn new_rect() -> Shape {

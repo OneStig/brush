@@ -21,7 +21,15 @@ impl Lexer {
     
         for line in lines {
             let mut chars = line.chars().peekable();
-    
+
+            if let Some('/') = chars.next() {
+                if let Some('/') = chars.peek() {
+                    // Entire line is a comment
+                    all_tokens.push(Token::new(TokenType::COMMENT, line.to_string()));
+                    continue;
+                }
+            }
+            
             while let Some(cc) = chars.next() {
                 match cc {
                     // Match current character to left and right parens and curly braces
@@ -30,7 +38,8 @@ impl Lexer {
                     '}' => all_tokens.push(Token::new(TokenType::R_CURLY, cc.to_string())),
                     '(' => all_tokens.push(Token::new(TokenType::L_PAREN, cc.to_string())),
                     ')' => all_tokens.push(Token::new(TokenType::R_PAREN, cc.to_string())),
-    
+
+                
                     '+' | '-' | '*' | '/' | '=' => all_tokens.push(Token::new(TokenType::OPERATOR,cc.to_string())),
                     
                     //check for strings
@@ -55,6 +64,7 @@ impl Lexer {
 
                         all_tokens.push(Token::new(TokenType::STRING, keyw));
                     }
+
 
                     // check for numbers
                     c if c.is_ascii_digit() => {

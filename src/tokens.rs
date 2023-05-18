@@ -28,6 +28,7 @@ pub enum TokenType {
     OPERATOR,
     LET,
     COMMA,
+    COMMENT,
     KEYWORD,
     SHAPE_KEYWORD,
     SHIFT_KEYWORD,

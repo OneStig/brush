@@ -43,6 +43,9 @@ impl Parser {
                     program.statements.push(shape);
                 }
 
+                TokenType::COMMENT => {
+                    unimplemented!();
+                }
                 TokenType::IDENTIFIER => {
                     let name = self.tokens[self.current as usize].clone().value;
 

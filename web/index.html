@@ -3,32 +3,48 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Brush</title>
+  <title>
+    Brush Playground
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
         background-color: #f5f5f5;
       }
       
-      h1 {
-        font-size: 28px;
+      h3 {
+        font-size: 20px;
         margin-bottom: 20px;
+        margin-left: 400px;
+        
       }
-      
+      h1{
+        font-size:40px;
+      }
       button {
-        font-size: 15px;
-        margin-top: 20px;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #e7e7e7;
+      color: #333;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
       }
       
     #container {
+    align-items: center;
       padding: 20px;
         border: 1px solid #ddd;
         border-radius: 0px;
       display: flex;
       flex-direction: row;
-      align-items: center;
     }
     #img {
-      margin-left: 350px;
+      margin-left: 0px;
       padding: 10px;
         border-radius: 5px;
         max-width: 600px;
@@ -51,11 +67,17 @@
   background: #282a3a;
   border-radius: 20px;
   padding: 20px 10px;
+  color: #ddd;
+  line-height: 25px;
+  font-size: 15px;
 }
 
 .line-numbers {
   width: 40px;
   text-align: right;
+  font-size: 15px;
+  line-height: 25px;
+ 
 }
 
 .line-numbers span {
@@ -67,9 +89,11 @@
   display: block;
   color: #506882;
 }
-
+.blue-text {
+    color: blue;
+  }
 textarea {
-  line-height: 15px;
+  line-height: 25px;
   overflow-y: hidden;
   padding: 0;
   border: 0;
@@ -78,24 +102,93 @@ textarea {
   min-width: 800px;
   outline: none;
   resize: none;
+  font-size: 15px;
+  font: monospace;
 }
+.button {
+  position: absolute;
+  top: 50px;
+  right: 50px;    
+  display: inline-block;
+      padding: 10px 20px;
+      background-color: #e7e7e7;
+      color: #333;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .image-container {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .image-container img {
+      float: left;
+      margin-right: 10px;
+    }
+
+    .text {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .runbut{
+      display: flex;
+      padding: 10px 20px;
+      background-color: #e7e7e7;
+      color: #333;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
 
 <body>
-  <a href="API.html" id="API-link">API</a>
-  <h3>Enter code here:</h3>
+  <nav class="bg-gray-800">
+    <div class="max-w-9xl mx-auto px-5 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-24">
+          <div class="image-container">
+            <img src="https://i.imgur.com/VxoTQ7D.png" width="100px">
+          </div>
+          <div class="text">
+            <a href="#" class="text-white font-medium text-3xl ml-2">Brush</a>
+          </div>
+        <div class="hidden md:block ml-auto">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-l font-medium">Playground</a>
+            <a href="API.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-l font-medium">API</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   <div id="container">
     <div class="editor">
       <div class="line-numbers"></div>
-      <textarea id="text" name="text" rows="40" cols="60"></textarea>
-
+      <div id="formatted-text"></div>
+      <textarea id="text" name="text" rows="22" cols="60" placeholder="Enter your code here...">//sample code
+let my_shape = circle {
+    stretch(0.5, 0.5)
+}
+      
+my_shape(
+    radius = 100
+    center = (100, 100)
+    generations = 8
+)</textarea>
     </div>
-    <img id="img" />
-  </div>
+    <img id="img" /></div>
   <br>
-  <button onclick="window.processText()">Generate Image</button>
-  
+  <div class="flex flex-col items-center justify-start bg-gray-100">
+    <button onclick="window.processText()" class="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300">Run</button>
+  </div>
   <script type="module" defer>
     import init, { process_file, greet } from "../pkg/brush.js";
     init().then(() => {
@@ -107,11 +200,10 @@ textarea {
         const text = document.getElementById("text").value;
         localStorage.setItem("textareaValue", text);
         console.log(text);
-        const svgString = process_file(text); // call the Rust function to generate the SVG string
+        const svgString = process_file(text); 
         console.log(svgString);
         const img = document.getElementById("img");
-        img.src = "data:image/svg+xml;base64," + btoa(svgString); // convert the SVG string to a data URL
-       // document.body.appendChild(img); // add the image to the HTML form
+        img.src = "data:image/svg+xml;base64," + btoa(svgString); 
       }
       window.processText = processText
   </script>
@@ -127,10 +219,8 @@ const lineNumbers = document.querySelector(".line-numbers");
     if (e.key === "(") {
       const start = this.selectionStart;
       const end = this.selectionEnd;
-      const value = this.value;
-      this.value = value.substring(0, start) + "(" + value.substring(end);
-      this.selectionStart = this.selectionEnd = start;
-      this.value += ")";
+      this.value = this.value.substring(0, start) + "()" + this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start+1;
       e.preventDefault();
     }
     const lines = textarea.value.split("\n").length;
@@ -143,9 +233,32 @@ const lineNumbers = document.querySelector(".line-numbers");
     if (e.key === "{") {
       const start = this.selectionStart;
       const end = this.selectionEnd;
-      this.value = this.value.substring(0, start) + "{" + this.value.substring(end);
-      this.selectionStart = this.selectionEnd = start + 1;
-      this.value += "}";
+      const indent = "\t";
+      this.value =
+        this.value.substring(0, start) +
+        "{\n\t\n}"+ this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start+1 + indent.length +indent.length;
+      e.preventDefault();
+    }
+    /*if (e.key === "{") {
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+      this.value = this.value.substring(0, start) + "{\t}" + this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start+1;
+      e.preventDefault();
+    }*/
+    const lines = textarea.value.split("\n").length;
+  lineNumbers.innerHTML = "";
+  for (let i = 1; i <= lines; i++) {
+    lineNumbers.innerHTML += `<span></span>`;
+  }
+  });
+  textarea.addEventListener("keydown", function(e) {
+    if (e.key === "Tab") { 
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+      this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start+1;
       e.preventDefault();
     }
     const lines = textarea.value.split("\n").length;
@@ -161,20 +274,6 @@ const lineNumbers = document.querySelector(".line-numbers");
     lineNumbers.innerHTML += `<span></span>`;
   }
 });
-textarea.addEventListener("keydown", function(e) {
-    if (e.key === "Tab") {
-      e.preventDefault(); // prevent the default tab behavior
-      const start = this.selectionStart;
-      const end = this.selectionEnd;
-      this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
-      this.selectionStart = this.selectionEnd = start + 1;
-    }
-    const lines = textarea.value.split("\n").length;
-  lineNumbers.innerHTML = "";
-  for (let i = 1; i <= lines; i++) {
-    lineNumbers.innerHTML += `<span></span>`;
-  }
-  });
   </script>
   
 </body>

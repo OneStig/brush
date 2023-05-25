@@ -38,6 +38,7 @@ impl BCircle {
                 rotation_about: 0.0,
                 warp_vals: (0.0, 0.0),
                 stretch: (1.0, 1.0),
+                transform_str: "".to_string()
             },
 
             radius: radius,

@@ -48,6 +48,7 @@ pub struct Shape {
     pub rotation_about: f32,
     pub warp_vals: (f32, f32),
     pub stretch: (f32, f32),
+    pub transform_str: (String)
 }
 
 #[derive(Debug, Clone)]

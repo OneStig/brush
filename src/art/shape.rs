@@ -1,3 +1,4 @@
+
 use std::ops::DerefMut;
 use std::ptr::addr_of;
 
@@ -14,6 +15,8 @@ impl Drawable for Shape {
     
     fn rotate(&mut self, angle: f32) {
         self.rotation += angle;
+        self.center.0 = self.center.0 * angle.cos() - self.center.1 * angle.sin();
+        self.center.1 = self.center.0 * angle.sin() + self.center.1 * angle.cos()
         
     }
 

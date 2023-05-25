@@ -39,8 +39,7 @@ impl BRectangle {
                 rotation_about: 0.0,
                 warp_vals: (0.0, 0.0),
                 stretch: (1.0, 1.0),
-                
-                
+                transform_str: "".to_string()
             },
 
             width: width,
@@ -98,6 +97,8 @@ impl Drawable for BRectangle {
         let rotate_about = format!("rotate({} {} {})", self.shape.rotation_about, self.shape.point_of_rotation.0, self.shape.point_of_rotation.1);
 
         let all_rotate = format!("{} {}", rotate, rotate_about);
+        self.shape.transform_str += &all_rotate;
+
         self.shape.rect = Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
@@ -106,7 +107,7 @@ impl Drawable for BRectangle {
                     .set("y", self.shape.center.1 - self.height / 2.0)
                     .set("width", self.width)
                     .set("height", self.height)
-                    .set("transform", all_rotate)    
-                );    
+                    .set("transform", self.shape.transform_str.clone())
+                );
     }
 }

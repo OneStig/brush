@@ -106,11 +106,7 @@ impl Drawable for BRectangle {
                     .set("y", self.shape.center.1 - self.height / 2.0)
                     .set("width", self.width)
                     .set("height", self.height)
-                    .set("transform", all_rotate)
-                    
-                );
-                
+                    .set("transform", all_rotate)    
+                );    
     }
-
-    
 }

@@ -346,11 +346,23 @@ impl Interpreter {
                                 (0.0, 0.0),
                                 (0.0, 0.0),
                                 (u8::from(0), u8::from(0), u8::from(0)),
+                                0.0
                             );
                             let mut generations = 1;
 
                             for property in properties {
-                                if property.name == "position" {
+                                if property.name=="thickness"{
+                                    rect_config.3 = match *property.value{
+                                        Node::NumberLiteral(num) =>{
+                                            num.value
+                                        },
+                                        _=>{
+                                            panic!("wrong type");
+                                        }
+                                    }
+        
+                                } 
+                                else if property.name == "position" {
                                     rect_config.0 = match *property.value {
                                         Node::TupleLiteral(tuple) => {
                                             // idk fix this by adding more nested matches
@@ -441,7 +453,10 @@ impl Interpreter {
                                     }
                                 }
                             }
-
+                            let mut thick = rect_config.3;
+                            if(thick==0.0){
+                                thick=1.0;
+                            }
                             // create boilerplate rectangle
                             let mut rect = BRectangle::new(
                                 rect_config.0 .0,
@@ -449,6 +464,7 @@ impl Interpreter {
                                 rect_config.1 .0,
                                 rect_config.1 .1,
                                 Some(rect_config.2),
+                                thick
                             );
 
                             for i in 0..generations {
@@ -559,27 +575,27 @@ impl Interpreter {
                             let mut th = circle_config.3;
                             if (circle_config.3==0.0){
                                 th = 1.0;
+                            }
+                            let mut circle = BCircle::new(
+                                circle_config.1.0,
+                                circle_config.1.1,
+                                circle_config.0,
+                                Some(circle_config.2), 
+                                th
+                            );
+    
+                            for i in 0..generations {
+                                // push to shapes
+                                circle.update();
+                                self.shapes.push(circle.clone().shape);
+    
+                                circle = circle.clone();
+                                // circle.hue_shift(5.0);
+                                evolve_fn(&mut circle, statements.clone());
+                            }
+    
                         }
 
-                        let mut circle = BCircle::new(
-                            circle_config.1.0,
-                            circle_config.1.1,
-                            circle_config.0,
-                            Some(circle_config.2), 
-                            th
-                        );
-
-                        for i in 0..generations {
-                            // push to shapes
-                            circle.update();
-                            self.shapes.push(circle.clone().shape);
-
-                            circle = circle.clone();
-                            // circle.hue_shift(5.0);
-                            evolve_fn(&mut circle, statements.clone());
-                        }
-
-                        }
 
                         _ => {
                             unimplemented!()

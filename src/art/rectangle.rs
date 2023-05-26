@@ -11,7 +11,7 @@ use svg::Document;
 
 use crate::art::{Drawable, Shape, BRectangle};
 impl BRectangle {
-    pub fn new(x: f32, y: f32, width: f32, height: f32, outline_color: Option<(u8, u8, u8)>) -> BRectangle {
+    pub fn new(x: f32, y: f32, width: f32, height: f32, outline_color: Option<(u8, u8, u8)>, thickness: f32) -> BRectangle {
         BRectangle {
             shape: Shape {
                 svg: None,
@@ -21,7 +21,7 @@ impl BRectangle {
                 rect: Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", "#000000")
-                    .set("stroke-width", 1)
+                    .set("stroke-width", thickness)
                     .set("width", width)
                     .set("height", height)
                     .set("x", x)
@@ -33,7 +33,7 @@ impl BRectangle {
                 dimensions: (0.0, 0.0),
                 fill: (0, 0, 0),
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
-                outline_width: 1.0,
+                outline_width: thickness,
                 rotation: 0.0,
                 point_of_rotation: (0.0, 0.0),
                 rotation_about: 0.0,
@@ -101,7 +101,7 @@ impl Drawable for BRectangle {
         self.shape.rect = Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
-                    .set("stroke-width", 1)
+                    .set("stroke-width", self.shape.outline_width)
                     .set("x", self.shape.center.0 - self.width / 2.0)
                     .set("y", self.shape.center.1 - self.height / 2.0)
                     .set("width", self.width)
